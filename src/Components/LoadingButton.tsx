@@ -1,16 +1,20 @@
-const LoadingButton = ({ textButton = "", loading = false, handleClick = () => {} }) => {
+import { Button, CircularProgress } from "@mui/material";
+
+const LoadingButton = ({
+  textButton = "",
+  loading = false,
+  handleClick = () => {},
+}) => {
   return (
-    <button
-      type="button"
-      className="btn w-50 btn-primary position-relative"
+    <Button
+      className="w-25"
+      variant="contained"
       onClick={handleClick}
       disabled={loading}
     >
-      {loading && ( 
-        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-      )}
+      {loading && <CircularProgress size={24} />}
       {!loading && textButton}
-    </button>
+    </Button>
   );
 };
 
