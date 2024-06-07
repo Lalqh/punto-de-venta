@@ -2,13 +2,13 @@ import { Route, Routes } from "react-router-dom";
 import SidebarItems from "./SidebarItems";
 import Products from "../../pages/products/Products";
 import Categories from "../../pages/Categories";
-import ContentPasteOutlinedIcon from '@mui/icons-material/ContentPasteOutlined';
-import AddHomeOutlinedIcon from '@mui/icons-material/AddHomeOutlined';
+import CategoryIcon from "@mui/icons-material/Category";
+import CheckroomIcon from "@mui/icons-material/Checkroom";
 
 const Menu = () => {
   const sidebarItems = [
-    { name: "Productos", link: "/", icon: <ContentPasteOutlinedIcon /> },
-    { name: "Categorías", link: "/categorias", icon: <AddHomeOutlinedIcon /> },
+    { name: "Productos", link: "/", icon: <CheckroomIcon /> },
+    { name: "Categorías", link: "/categorias", icon: <CategoryIcon /> },
   ];
 
   return (
