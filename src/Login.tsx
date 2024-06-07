@@ -1,10 +1,14 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import { Avatar, TextField, Typography } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import LoadingButton from "./Components/LoadingButton";
-import Alert from "./Components/Alert";
+import LoadingButton from "./components/LoadingButton";
+import Alert from "./components/Alert";
+import { loginUser } from "./services/AuthServices";
+import { setSessionStorage } from "./services/StorageService";
+import { UserContext } from "./context/UserContext";
 
 const Login = () => {
+  const { setLogin } = useContext(UserContext);
   const [isSaving, setIsSaving] = useState(false);
   const [showAlert, setshowAlert] = useState<boolean>(false);
   const [alertText, setAlertText] = useState("");
@@ -12,93 +16,34 @@ const Login = () => {
     "error" | "warning" | "info" | "success"
   >("error");
   const [values, setValues] = useState({ email: "", password: "" });
-  const [showData, setshowData] = useState<boolean>(false);
-  const [data, setData] = useState<any[]>([]);
+  const [errors, setErrores] = useState({ email: false, password: false });
 
-  const handleClick = () => {
+  const handleClick = async () => {
     setIsSaving(true);
     setshowAlert(false);
 
-    if (values.email === "" || values.password === "") {
-      setAlertText("Todos los campos son requeridos");
-      setAlertType("error");
+    const response = await loginUser(values, errors, setErrores);
+
+    if (response.statusCode == 400) {
+      setAlertText(response.message);
+      setAlertType("warning");
       setshowAlert(true);
-      setIsSaving(false);
-      return;
+    } else if (response.statusCode == 401) {
+      setAlertText("Correo o contraseña incorrectos");
+      setAlertType("warning");
+      setshowAlert(true);
     } else {
-      fetch("http://localhost:3010/api/v1/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      })
-        .then((response) => {
-          if (response.ok) {
-            response.json().then((data) => {
-              localStorage.setItem("user", JSON.stringify(data.dataUser));
-              localStorage.setItem("token", data.token);
-              setAlertText("Inicio de sesión exitoso");
-              setAlertType("success");
-              setshowAlert(true);
-              setIsSaving(false);
-            });
-          } else {
-            setIsSaving(false);
-            setAlertText("Error al intentar iniciar sesión");
-            setAlertType("error");
-            setshowAlert(true);
-          }
-        })
-        .catch((error) => {
-          setIsSaving(false);
-          setAlertText("Error al intentar iniciar sesión" + error);
-          setAlertType("error");
-          setshowAlert(true);
-        });
+      setSessionStorage(response.token);
+      setLogin(true);
     }
+
+    setIsSaving(false);
   };
 
   const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [target.name]: target.value });
+    setErrores({ ...errors, [target.name]: false });
   };
-
-  useEffect(() => {
-    const user = localStorage.getItem("user");
-
-    if (user) {
-      const userObj = JSON.parse(user);
-      fetch(`http://localhost:3010/api/v1/users?email=${userObj.emial}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => {
-          if (response.ok) {
-            response.json().then((data) => {
-              if (data.user) {
-                fetch("http://localhost:3010/api/v1/products", {
-                  method: "GET",
-                  headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                  },
-                })
-                  .then((response) => response.json())
-                  .then((data) => {
-                    setData(data);
-                    setshowData(true);
-                  });
-              }
-            });
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, []);
 
   return (
     <div className="container mt-5">
@@ -135,6 +80,8 @@ const Login = () => {
                 margin="normal"
                 variant="outlined"
                 onChange={handleInputChange}
+                error={errors.email}
+                helperText={errors.email ? "Campo requerido" : ""}
               />
               <TextField
                 fullWidth
@@ -145,6 +92,8 @@ const Login = () => {
                 variant="outlined"
                 type="password"
                 onChange={handleInputChange}
+                error={errors.password}
+                helperText={errors.password ? "Campo requerido" : ""}
               />
               <div className="d-flex justify-content-center mt-2">
                 <LoadingButton
@@ -155,30 +104,6 @@ const Login = () => {
               </div>
             </div>
           </div>
-          {showData && (
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Nombre</th>
-                  <th>Descripcion</th>
-                  <th>Precio</th>
-                  <th>Stock</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((item) => (
-                  <tr key={item._id}>
-                    <td>{item._id}</td>
-                    <td>{item.name}</td>
-                    <td>{item.description}</td>
-                    <td>{item.price}</td>
-                    <td>{item.stock}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
         </div>
       </div>
     </div>
