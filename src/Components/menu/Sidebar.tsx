@@ -5,7 +5,7 @@ import Categories from "../../pages/Categories";
 
 const Menu = () => {
   const sidebarItems = [
-    { name: "Productos", link: "/productos" },
+    { name: "Productos", link: "/" },
     { name: "Categorías", link: "/categorias" },
   ];
 
@@ -14,7 +14,7 @@ const Menu = () => {
       <SidebarItems items={sidebarItems} />
       <div className="flex-grow-1 p-3">
         <Routes>
-          <Route path="productos/*" element={<Products />} />
+          <Route path="/" element={<Products />} />
           <Route path="categorias/*" element={<Categories />} />
         </Routes>
       </div>
