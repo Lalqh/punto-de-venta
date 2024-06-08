@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Login from "./Login";
-import Sidebar from "./Components/menu/Sidebar";
+import Sidebar from "./components/menu/Sidebar";
 import { UserContext } from "./context/UserContext";
 
 const AuthManager = () => {
