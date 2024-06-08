@@ -7,7 +7,7 @@ import CheckroomIcon from "@mui/icons-material/Checkroom";
 
 const Menu = () => {
   const sidebarItems = [
-    { name: "Productos", link: "/", icon: <CheckroomIcon /> },
+    { name: "Productos", link: "/productos", icon: <CheckroomIcon /> },
     { name: "Categorías", link: "/categorias", icon: <CategoryIcon /> },
   ];
 
@@ -16,7 +16,7 @@ const Menu = () => {
       <SidebarItems items={sidebarItems} />
       <div className="flex-grow-1 p-3">
         <Routes>
-          <Route path="/" element={<Products />} />
+          <Route path="productos/*" element={<Products />} />
           <Route path="categorias/*" element={<Categories />} />
         </Routes>
       </div>
