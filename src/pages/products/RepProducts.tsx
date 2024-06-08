@@ -1,50 +1,47 @@
-import styled from "styled-components";
-import { Button } from "@mui/material";
-import TableProducts from "./TableProducts";
+import { useEffect, useState } from "react";
+import Button from "../../components/Button";
+import Table from "./TableProducts";
+import { getProducts, headTable } from "../../services/ProductsServices";
+import { useNavigate } from "react-router-dom";
+import { Typography } from "@mui/material";
+import ProgressBar from "../../components/ProgressBar";
 
-const StyledButtonAdd = styled(Button)`
-  color: green;
-  border-color: green;
-  margin-right: 10px;
-  transition: all 0.3s ease-in-out;
+const RepProductos = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  &&:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    background: linear-gradient(45deg, #00c853 30%, #b2ff59 90%);
-    color: white;
-  }
-`;
+  const fetchData = async () => {
+    setLoading(true);
+    const response = await getProducts();
+    setData(response);
+    setLoading(false);
+  };
 
-const StyledButtonDelete = styled(Button)`
-  color: red;
-  border-color: red;
-  transition: all 0.3s ease-in-out;
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  &&:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    background: linear-gradient(45deg, #d50000 30%, #ff1744 90%);
-    color: white;
-  }
-`;
-
-const RepProducts = () => {
   return (
     <div className="p-3">
-      <div className="card mt-3">
+      <Typography variant="h5">Productos</Typography>
+      <div className="card mt-3 shadow rounded">
         <div className="row p-3">
           <div className="col-12 mt-3">
-            <TableProducts />
+            {loading ? <ProgressBar /> : <Table rows={data} />}
           </div>
         </div>
       </div>
       <div className="d-flex justify-content-center mt-3">
-        <StyledButtonAdd variant="outlined">Agregar</StyledButtonAdd>
-        <StyledButtonDelete variant="outlined">Eliminar</StyledButtonDelete>
+        <Button
+          onClick={() => {
+            navigate("add");
+          }}
+          text="Agregar"
+        />
       </div>
     </div>
   );
 };
 
-export default RepProducts;
+export default RepProductos;

@@ -1,13 +1,15 @@
 import { Route, Routes } from "react-router-dom";
-import RepProducts from "./RepProducts";
+import RepProductos from "./RepProducts";
+import FromProduct from "./FromProduct";
 
-const Products = () => {
+const Productos = () => {
+
   return (
     <Routes>
-      <Route path="/" element={<RepProducts />} />
-      <Route path=":id" element={<h1>Producto</h1>} />
+      <Route path="/" element={<RepProductos />} />
+      <Route path="add/*" element={<FromProduct />} />
     </Routes>
   );
 };
 
-export default Products;
+export default Productos;
