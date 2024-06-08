@@ -1,6 +1,6 @@
 import { Autocomplete, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
-import { getCategorires } from "../services/CategoryServices";
+import { getCategories } from "../services/CategoryServices";
 
 interface Category {
   id: number;
@@ -15,7 +15,7 @@ const AutoCompleteCategory: React.FC = () => {
   const [categories, setCtegories] = useState([] as Category[]);
 
   const fetchCategories = async () => {
-    const response = await getCategorires();
+    const response = await getCategories();
     setCtegories(response);
   };
 

@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import SidebarItems from "./SidebarItems";
 import Products from "../../pages/products/Products";
-import Categories from "../../pages/Categories";
+import Categories from "../../pages/Categories/Categories";
 import CategoryIcon from "@mui/icons-material/Category";
 import CheckroomIcon from "@mui/icons-material/Checkroom";
 

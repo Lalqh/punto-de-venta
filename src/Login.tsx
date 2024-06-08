@@ -1,8 +1,8 @@
 import { ChangeEvent, useContext, useState } from "react";
 import { Avatar, TextField, Typography } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import LoadingButton from "./components/LoadingButton";
-import Alert from "./components/Alert";
+import LoadingButton from "./Components/LoadingButton";
+import Alert from "./Components/Alert";
 import { loginUser } from "./services/AuthServices";
 import { setSessionStorage } from "./services/StorageService";
 import { UserContext } from "./context/UserContext";

@@ -1,11 +1,11 @@
 import { TextField, Typography, IconButton, Stack } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import LoadingButton from "../../Components/LoadingButton";
-import AutoCompleteCategory from "../../Components/AutoCompleteCategory";
 import { useNavigate } from "react-router-dom";
 
-const FromProduct = () => {
+const FromCategory = () => {
   const navigate = useNavigate();
+
   return (
     <div className="p-3">
       <div className="d-flex align-items-center justify-content-start">
@@ -16,7 +16,7 @@ const FromProduct = () => {
         >
           <ArrowBackIcon />
         </IconButton>
-        <Typography variant="h5">Productos</Typography>
+        <Typography variant="h5">Categorías</Typography>
       </div>
       <div className="card shadow rounded mt-3">
         <div className="card shadow rounded m-3 mt-4">
@@ -39,27 +39,6 @@ const FromProduct = () => {
                 variant="outlined"
               />
             </div>
-            <div className="col-md-4 col-sm-12 mt-4">
-              <TextField
-                label="Precio"
-                variant="outlined"
-                name="precio"
-                placeholder="Precio"
-                fullWidth
-              />
-            </div>
-            <div className="col-md-4 col-sm-12 mt-4">
-              <TextField
-                label="Stock"
-                variant="outlined"
-                name="stock"
-                placeholder="Stock"
-                fullWidth
-              />
-            </div>
-            <div className="col-md-4 col-sm-12 mt-4">
-              <AutoCompleteCategory />
-            </div>
           </div>
         </div>
         <div className="d-flex justify-content-end p-3">
@@ -70,4 +49,4 @@ const FromProduct = () => {
   );
 };
 
-export default FromProduct;
+export default FromCategory;

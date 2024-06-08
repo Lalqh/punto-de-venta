@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import Button from "../../Components/Button";
-import Table from "./TableProducts";
-import { getProducts, headTable } from "../../services/ProductsServices";
+import Table from "./TableCategories";
+import { getCategories } from "../../services/CategoryServices";
 import { useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
 import ProgressBar from "../../Components/ProgressBar";
 
-const RepProductos = () => {
+const RepCategories = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const fetchData = async () => {
     setLoading(true);
-    const response = await getProducts();
+    const response = await getCategories();
     setData(response);
     setLoading(false);
   };
@@ -24,7 +24,7 @@ const RepProductos = () => {
 
   return (
     <div className="p-3">
-      <Typography variant="h5">Productos</Typography>
+      <Typography variant="h5">Categorías</Typography>
       <div className="card mt-3 shadow rounded">
         <div className="row p-3">
           <div className="col-12 mt-3">
@@ -44,4 +44,4 @@ const RepProductos = () => {
   );
 };
 
-export default RepProductos;
+export default RepCategories;

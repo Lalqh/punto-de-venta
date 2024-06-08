@@ -1,10 +1,11 @@
 import { fectGet } from "./ApiServices";
 
-export const getCategorires = async () => {
-    const response = await fectGet("categories");
-    if(response.success == false){
-        return [];
-    }
+export const headTable = ["Nombre", "Descripción"];
 
-    return response
-}
+export const getCategories = async () => {
+  const response = await fectGet("categories");
+  if (response.success === false) {
+    return [];
+  }
+  return response;
+};

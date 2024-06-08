@@ -1,23 +1,24 @@
 import { useEffect, useState } from "react";
 
-const ShowProducts = () => {
+const ShowCategories = () => {
   const [data, setData] = useState<any[]>([]);
+
   useEffect(() => {
-    fetch("http://localhost:3010/api/v1/products/products")
+    fetch("http://localhost:3010/api/v1/categories/categories")
       .then((response) => response.json())
-      .then((data) => setData(data));
+      .then((data) => setData(data))
+      .catch((error) => console.error("Error fetching categories:", error));
   }, []);
+
   return (
     <>
-      <h1>Mostrar Productos</h1>
+      <h1>Mostrar Categorías</h1>
       <table className="table">
         <thead>
           <tr>
             <th>ID</th>
             <th>Nombre</th>
-            <th>Descripcion</th>
-            <th>Precio</th>
-            <th>Stock</th>
+            <th>Descripción</th>
           </tr>
         </thead>
         <tbody>
@@ -26,8 +27,6 @@ const ShowProducts = () => {
               <td>{item._id}</td>
               <td>{item.name}</td>
               <td>{item.description}</td>
-              <td>{item.price}</td>
-              <td>{item.stock}</td>
             </tr>
           ))}
         </tbody>
@@ -36,4 +35,4 @@ const ShowProducts = () => {
   );
 };
 
-export default ShowProducts;
+export default ShowCategories;

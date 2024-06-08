@@ -3,7 +3,6 @@ import RepProductos from "./RepProducts";
 import FromProduct from "./FromProduct";
 
 const Productos = () => {
-
   return (
     <Routes>
       <Route path="/" element={<RepProductos />} />

@@ -7,16 +7,13 @@ interface TableRow {
   _id: string;
   name: string;
   description: string;
-  price: number;
-  stock: number;
-  category: string;
 }
 
 interface Table {
   rows: TableRow[];
 }
 
-const TableProducts: React.FC<Table> = ({ rows }) => {
+const TableCategories: React.FC<Table> = ({ rows }) => {
   const itemsPerPage = 5;
   const [activePage, setActivePage] = useState(1);
   const lastIndex = activePage * itemsPerPage;
@@ -43,9 +40,6 @@ const TableProducts: React.FC<Table> = ({ rows }) => {
           <tr>
             <th>Nombre</th>
             <th>Descripción</th>
-            <th>Precio</th>
-            <th>Stock</th>
-            <th>Categoría</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -54,9 +48,6 @@ const TableProducts: React.FC<Table> = ({ rows }) => {
             <tr key={row._id}>
               <td>{row.name}</td>
               <td>{row.description}</td>
-              <td>{row.price}</td>
-              <td>{row.stock}</td>
-              <td>{row.category}</td>
               <td>
                 <Tooltip title="Editar" placement="top">
                   <IconButton>
@@ -90,4 +81,4 @@ const TableProducts: React.FC<Table> = ({ rows }) => {
   );
 };
 
-export default TableProducts;
+export default TableCategories;
