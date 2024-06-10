@@ -59,7 +59,7 @@ const FromProduct = () => {
     if (response.createdAt) {
       Swal.fire({
         icon: "success",
-        title: { id } ? "Producto editado" : "Producto guardado",
+        title:  id  ? "Producto editado" : "Producto guardado",
         showConfirmButton: false,
         timer: 2000,
       });
