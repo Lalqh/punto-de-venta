@@ -29,7 +29,7 @@ const FromProduct = () => {
   });
 
   const [loading, setLoading] = useState(false);
-  const [loadInfo, setLoadInfo] = useState(false);
+  const [loadInfo, setLoadInfo] = useState(true);
 
   const handleChange = (e: any) => {
     let { name, value } = e.target;
@@ -77,11 +77,11 @@ const FromProduct = () => {
         text: "Ocurrio un error al guardar el producto",
       });
     }
-    setLoading(false);
+    setLoading(true);
   };
 
   const getProduct = async (id: string) => {
-    setLoadInfo(false);
+    setLoadInfo(true);
     const response = await getProductsById(id);
     if (response.statusCode != 404) {
       setValues({

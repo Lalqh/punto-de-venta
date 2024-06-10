@@ -39,7 +39,7 @@ export const fecthPut = async (url: string, data: any) => {
       message: "Error al realizar la petición",
     };
   }
-}
+};
 
 export const fectGet = async (url: string) => {
   try {
@@ -77,4 +77,4 @@ export const fectDelete = async (url: string) => {
       message: "Error al realizar la petición",
     };
   }
-}
+};
