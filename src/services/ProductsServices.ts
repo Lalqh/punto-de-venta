@@ -1,4 +1,4 @@
-import { fectGet, fecthPost } from "./ApiServices";
+import { fectDelete, fectGet, fecthPost, fecthPut } from "./ApiServices";
 
 export const headTable = ["Nombre", "Precio", "Stock"];
 
@@ -10,7 +10,16 @@ export const getProducts = async () => {
   return response;
 };
 
-export const saveProduct = async (values: any, errors: any, setErrors: Function) => {
+export const getProductsById = async (id: string) => {
+  const response = await fectGet(`products?id=${id}`);
+  return response;
+};
+
+export const saveProduct = async (
+  values: any,
+  errors: any,
+  setErrors: Function
+) => {
   let error = false;
   let newError = errors;
 
@@ -45,18 +54,31 @@ export const saveProduct = async (values: any, errors: any, setErrors: Function)
   }
 
   if (!error) {
-
     let body = {
+      id: values.id,
       name: values.nombre,
       description: values.descripcion,
       price: values.precio,
       stock: values.stock,
-      category: values.categoria.id,
+      category: values.categoria._id,
     };
 
-    const response = await fecthPost("products", body);
+    let response;
+
+    if (values.id) {
+      response = await fecthPut(`products`, body);
+    } else {
+      response = await fecthPost("products", body);
+    }
+
     return response;
   } else {
     return { statusCode: 400, message: "Completa todos los campos" };
   }
 };
+
+export const deleteProduct = async (id: string) => {
+  const response = await fectDelete(`products?id=${id}`);
+  console.log(response);
+  return response;
+}

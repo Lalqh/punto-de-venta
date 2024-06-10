@@ -34,7 +34,11 @@ const RepProductos = () => {
       <div className="card mt-3 shadow rounded">
         <div className="row p-3">
           <div className="col-12 mt-3">
-            {loading ? <ProgressBar /> : <Table rows={data} />}
+            {loading ? (
+              <ProgressBar />
+            ) : (
+              <Table rows={data} updateTable={fetchData} />
+            )}
           </div>
         </div>
       </div>

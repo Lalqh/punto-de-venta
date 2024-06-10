@@ -6,7 +6,8 @@ const Productos = () => {
   return (
     <Routes>
       <Route path="/" element={<RepProductos />} />
-      <Route path="add/*" element={<FromProduct />} />
+      <Route path="add" element={<FromProduct />} />
+      <Route path="edit/:id" element={<FromProduct />} />
     </Routes>
   );
 };

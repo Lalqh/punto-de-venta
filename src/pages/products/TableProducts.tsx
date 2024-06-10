@@ -2,6 +2,9 @@ import { useState } from "react";
 import { IconButton, Tooltip } from "@mui/material";
 import AppRegistrationOutlinedIcon from "@mui/icons-material/AppRegistrationOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import { deleteProduct } from "../../services/ProductsServices";
 
 interface TableRow {
   _id: string;
@@ -9,14 +12,18 @@ interface TableRow {
   description: string;
   price: number;
   stock: number;
-  category: string;
+  category: {
+    name: string;
+  };
 }
 
 interface Table {
   rows: TableRow[];
+  updateTable: Function;
 }
 
-const TableProducts: React.FC<Table> = ({ rows }) => {
+const TableProducts: React.FC<Table> = ({ rows, updateTable }) => {
+  const navigate = useNavigate();
   const itemsPerPage = 5;
   const [activePage, setActivePage] = useState(1);
   const lastIndex = activePage * itemsPerPage;
@@ -34,6 +41,29 @@ const TableProducts: React.FC<Table> = ({ rows }) => {
     if (activePage < totalPages) {
       setActivePage(activePage + 1);
     }
+  };
+
+  const handleDelete = async (id: string) => {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "No podrás revertir esta acción",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const response = await deleteProduct(id);
+        if (response.message) {
+          Swal.fire("Eliminado", "El producto ha sido eliminado", "success");
+          updateTable();
+        } else {
+          Swal.fire("Error", "Ha ocurrido un error", "error");
+        }
+      }
+    });
   };
 
   return (
@@ -56,15 +86,23 @@ const TableProducts: React.FC<Table> = ({ rows }) => {
               <td>{row.description}</td>
               <td>{row.price}</td>
               <td>{row.stock}</td>
-              <td>{row.category}</td>
+              <td>{row.category ? row.category.name : "Sin categoría"}</td>
               <td>
                 <Tooltip title="Editar" placement="top">
-                  <IconButton>
+                  <IconButton
+                    onClick={() => {
+                      navigate(`edit/${row._id}`);
+                    }}
+                  >
                     <AppRegistrationOutlinedIcon />
                   </IconButton>
                 </Tooltip>
                 <Tooltip title="Eliminar" placement="top">
-                  <IconButton>
+                  <IconButton
+                    onClick={() => {
+                      handleDelete(row._id);
+                    }}
+                  >
                     <DeleteOutlineOutlinedIcon />
                   </IconButton>
                 </Tooltip>
