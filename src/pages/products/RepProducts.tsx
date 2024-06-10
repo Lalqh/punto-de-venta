@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Button from "../../Components/Button";
 import Table from "./TableProducts";
-import { getProducts, headTable } from "../../services/ProductsServices";
+import { getProducts } from "../../services/ProductsServices";
 import { useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
 import ProgressBar from "../../Components/ProgressBar";
@@ -13,9 +13,15 @@ const RepProductos = () => {
 
   const fetchData = async () => {
     setLoading(true);
-    const response = await getProducts();
-    setData(response);
-    setLoading(false);
+    try {
+      const response = await getProducts();
+      setData(response);
+      setLoading(false);
+    } catch (_error) {
+      {
+        setLoading(false);
+      }
+    }
   };
 
   useEffect(() => {
