@@ -12,6 +12,8 @@ const AuthManager = () => {
     const token = localStorage.getItem("token");
     if (token) {
       setisLoing(true);
+    }else{
+      setisLoing(false);
     }
   }, [login]);
 
