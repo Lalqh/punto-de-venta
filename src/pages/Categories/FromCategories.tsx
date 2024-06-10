@@ -34,8 +34,7 @@ const FromCategories = () => {
     setLoading(true);
 
     const response = await saveCategory(values, errors, setErrors);
-    console.log(response);
-    if (response && response.createdAt) {
+    if (response._id) {
       Swal.fire({
         icon: "success",
         title: id ? "Categoría editada" : "Categoría guardada",
@@ -43,7 +42,7 @@ const FromCategories = () => {
         timer: 2000,
       });
       navigate(-1);
-    } else if (response && response.statusCode === 400) {
+    } else if (response.statusCode == 400) {
       Swal.fire({
         icon: "error",
         title: "Error",

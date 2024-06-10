@@ -53,7 +53,7 @@ export const saveCategory = async (
   setErrors: (errors: Errors) => void
 ) => {
   if (validateCategory(values, errors, setErrors)) {
-    throw new Error("Completa todos los campos");
+    return { statusCode: 400 };
   }
 
   let body = {
