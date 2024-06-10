@@ -1,7 +1,8 @@
 const API_URL = "http://localhost:3010/api/v1/";
-const token = localStorage.getItem("token") || "";
+
 
 export const fecthPost = async (url: string, data: any) => {
+  const token = localStorage.getItem("token") || "";
   try {
     const response = await fetch(`${API_URL}${url}`, {
       method: "POST",
@@ -22,6 +23,7 @@ export const fecthPost = async (url: string, data: any) => {
 };
 
 export const fecthPut = async (url: string, data: any) => {
+  const token = localStorage.getItem("token") || "";
   try {
     const response = await fetch(`${API_URL}${url}`, {
       method: "PUT",
@@ -42,6 +44,7 @@ export const fecthPut = async (url: string, data: any) => {
 };
 
 export const fectGet = async (url: string) => {
+  const token = localStorage.getItem("token") || "";
   try {
     const response = await fetch(`${API_URL}${url}`, {
       method: "GET",
@@ -61,6 +64,7 @@ export const fectGet = async (url: string) => {
 };
 
 export const fectDelete = async (url: string) => {
+  const token = localStorage.getItem("token") || "";
   try {
     const response = await fetch(`${API_URL}${url}`, {
       method: "DELETE",
