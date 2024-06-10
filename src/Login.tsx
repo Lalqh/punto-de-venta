@@ -23,7 +23,7 @@ const Login = () => {
     setshowAlert(false);
 
     const response = await loginUser(values, errors, setErrores);
-
+    console.log(response);
     if (response.statusCode == 400) {
       setAlertText(response.message);
       setAlertType("warning");
@@ -32,7 +32,12 @@ const Login = () => {
       setAlertText("Correo o contraseña incorrectos");
       setAlertType("warning");
       setshowAlert(true);
-    } else {
+    } else if (response.statusCode == 404) {
+      setAlertText("Este usaurio no esta registrado");
+      setAlertType("warning");
+      setshowAlert(true);
+    }
+    else {
       setSessionStorage(response.token);
       setLogin(true);
     }
