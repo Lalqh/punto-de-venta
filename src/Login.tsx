@@ -33,11 +33,10 @@ const Login = () => {
       setAlertType("warning");
       setshowAlert(true);
     } else if (response.statusCode == 404) {
-      setAlertText("Este usaurio no esta registrado");
+      setAlertText("Este usuario no esta registrado");
       setAlertType("warning");
       setshowAlert(true);
-    }
-    else {
+    } else {
       setSessionStorage(response.token);
       setLogin(true);
     }
